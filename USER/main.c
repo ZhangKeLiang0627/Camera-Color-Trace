@@ -30,13 +30,12 @@ uint8_t press_flag;
 extern uint8_t flag;
 int main(void)
 {
-	FRESULT res;
 
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // 设置系统中断优先级分组2
 	delay_init(168);								// 初始化延时函数
 
-	uart_init(115200);								// 初始化串口波特率为115200
-	LED_Init();										// 初始化LED
+	uart_init(115200); // 初始化串口波特率为115200
+	LED_Init();		   // 初始化LED
 	while (OV2640_Init())
 	{
 		printf("Camera init ERR\r\n");
@@ -50,9 +49,6 @@ int main(void)
 	PWM_WS2812B_Init(WS2812B_ARR - 1);
 	exfuns_init(); // 为fatfs相关变量申请内存
 
-	res = f_mount(fs[1], "1:", 1); // 挂载FLASH.
-	if (res == FR_OK)
-		printf("flash挂载成功!\r\n");
 	// else if (res == 0X0D) // FLASH磁盘,FAT文件系统错误,重新格式化FLASH
 	// {
 	// 	// 格式化FLASH
